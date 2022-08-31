@@ -1,15 +1,32 @@
-extends Sprite
+extends KinematicBody2D
+
+onready var animatedSprite = $AnimatedSprite
+export (int) var speed = 200
+var velocity = Vector2()
+
+func get_keyboard_input():
+	velocity = Vector2()
+	# TODO: stop using UI inputs and create action inputs
+	if Input.is_action_pressed("ui_right"):
+		velocity.x += 1
+		animatedSprite.set_flip_h(false)
+	if Input.is_action_pressed("ui_left"):
+		velocity.x -= 1
+		animatedSprite.set_flip_h(true)
+	if Input.is_action_pressed("ui_up"):
+		velocity.y -= 1
+	if Input.is_action_pressed("ui_down"):
+		velocity.y += 1
+	
+	velocity = velocity.normalized() * speed
 
 func _physics_process(_delta):
 	var input = Vector2()
 	
-	if Input.is_key_pressed(KEY_W) || Input.is_key_pressed(KEY_UP):
-		input.y = -5
-	if Input.is_key_pressed(KEY_S) || Input.is_key_pressed(KEY_DOWN):
-		input.y = 5
-	if Input.is_key_pressed(KEY_A) || Input.is_key_pressed(KEY_LEFT):
-		input.x = -5
-	if Input.is_key_pressed(KEY_D) || Input.is_key_pressed(KEY_RIGHT):
-		input.x = 5
+	get_keyboard_input()
+	velocity = move_and_slide(velocity)
 	
-	position += input
+	if velocity == Vector2(0,0):
+		animatedSprite.set_animation("idle")
+	else:
+		animatedSprite.set_animation("run")
