@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blob_animation_Ida_7.png-ae3ba131d5d151421c8c160adb495504.stex"
+path="res://.import/blob_animation_Ida_7.png-23694d3929ea6a16d5c9fa30480ffd3b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/blob/blob_animation_Ida_7.png"
-dest_files=[ "res://.import/blob_animation_Ida_7.png-ae3ba131d5d151421c8c160adb495504.stex" ]
+source_file="res://assets/Blob/blob_animation_Ida_7.png"
+dest_files=[ "res://.import/blob_animation_Ida_7.png-23694d3929ea6a16d5c9fa30480ffd3b.stex" ]
 
 [params]
 
