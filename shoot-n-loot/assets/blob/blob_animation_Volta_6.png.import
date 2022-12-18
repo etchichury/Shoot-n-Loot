@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blob_animation_Volta_6.png-88565be1e2b1a257958e7acacc1f25e3.stex"
+path="res://.import/blob_animation_Volta_6.png-d2507fb460659f668607f6d537852f20.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Blob/blob_animation_Volta_6.png"
-dest_files=[ "res://.import/blob_animation_Volta_6.png-88565be1e2b1a257958e7acacc1f25e3.stex" ]
+source_file="res://assets/blob/blob_animation_Volta_6.png"
+dest_files=[ "res://.import/blob_animation_Volta_6.png-d2507fb460659f668607f6d537852f20.stex" ]
 
 [params]
 
