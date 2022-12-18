@@ -2,11 +2,16 @@ extends KinematicBody2D
 
 onready var animatedSprite = $AnimatedSprite
 onready var atack_timer = $AttackTimer
+onready var health_label = $HealthLabel
 
+export (int) var hp = 50
 export (int) var speed = 200
-export var dagger = preload("res://src/projectiles/PlayerArrow.tscn")
+export var arrow = preload("res://src/projectiles/PlayerArrow.tscn")
 
 var velocity = Vector2()
+
+func _ready():
+	health_label.set_text(str(self.hp))
 
 func get_keyboard_input():
 	velocity = Vector2()
@@ -26,19 +31,18 @@ func get_keyboard_input():
 
 func get_mouse_input():
 	if Input.is_action_pressed("action_fire"):
-		var dagger_direction = self.global_position.direction_to(get_global_mouse_position())
-		throw_dagger(dagger_direction)
+		var arrow_direction = self.global_position.direction_to(get_global_mouse_position())
+		shoot_arrow(arrow_direction)
 		atack_timer.start()
 
-# TODO: change 'dagger' term to 'arrow'
-func throw_dagger(dagger_direction: Vector2):
+func shoot_arrow(arrow_direction: Vector2):
 	if Input.is_action_pressed("action_fire") && atack_timer.is_stopped():
-		var dagger_instance = dagger.instance()
-		get_tree().current_scene.add_child(dagger_instance)
-		dagger_instance.global_position = self.global_position
+		var arrow_instance = arrow.instance()
+		get_tree().current_scene.add_child(arrow_instance)
+		arrow_instance.global_position = self.global_position
 		
-		var dagger_angle = dagger_direction.angle()
-		dagger_instance.rotation = dagger_angle
+		var arrow_angle = arrow_direction.angle()
+		arrow_instance.rotation = arrow_angle
 
 func _physics_process(_delta):
 	get_mouse_input()
@@ -50,3 +54,10 @@ func _physics_process(_delta):
 		animatedSprite.set_animation("idle")
 	else:
 		animatedSprite.set_animation("run")
+
+
+func _on_Hurtbox_area_entered(hitbox):
+	var damage = hitbox.damage
+	self.hp -= damage
+	health_label.set_text(str(self.hp))
+	print(hitbox.get_parent().name + "'s hitbox touched " + name + "'s hitbox and dealt " + str(damage))
