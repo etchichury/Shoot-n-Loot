@@ -154,7 +154,6 @@ script = ExtResource( 27 )
 position = Vector2( 1.9, -6.2 )
 frames = SubResource( 4 )
 animation = "run"
-frame = 2
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
@@ -207,7 +206,7 @@ position = Vector2( -22, -24.5 )
 scale = Vector2( 1, 0.90625 )
 z_index = 1
 frames = SubResource( 2 )
-frame = 1
+frame = 9
 playing = true
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Blob"]
@@ -243,7 +242,9 @@ margin_right = 16.0
 margin_bottom = -20.0
 rect_scale = Vector2( 0.3, 0.3 )
 
+[connection signal="died" from="Player" to="Player" method="_on_Player_died"]
 [connection signal="area_entered" from="Player/Hurtbox" to="Player" method="_on_Hurtbox_area_entered"]
+[connection signal="died" from="Blob" to="Blob" method="_on_Blob_died"]
 [connection signal="area_entered" from="Blob/Hurtbox" to="Blob" method="_on_Hurtbox_area_entered"]
 
 [editable path="Player/Hurtbox"]

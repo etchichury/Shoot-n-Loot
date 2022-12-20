@@ -1,21 +1,31 @@
 extends KinematicBody2D
 
+signal hp_changed(hp)
+signal died
+
 onready var animatedSprite = $AnimatedSprite
 onready var atack_timer = $AttackTimer
 onready var health_label = $HealthLabel
 
-export (int) var hp = 50
+export (int) var max_hp = 50
+export (int) var hp = max_hp setget set_hp
 export (int) var speed = 200
 export var arrow = preload("res://src/projectiles/PlayerArrow.tscn")
 
 var velocity = Vector2()
+
+func set_hp(value):
+	if value != hp:
+		hp = clamp(value, 0, max_hp)
+		emit_signal("hp_changed", hp)
+		if hp == 0:
+			emit_signal("died")
 
 func _ready():
 	health_label.set_text(str(self.hp))
 
 func get_keyboard_input():
 	velocity = Vector2()
-	# TODO: stop using UI inputs and create action inputs
 	if Input.is_action_pressed("ui_right"):
 		velocity.x += 1
 		animatedSprite.set_flip_h(false)
@@ -60,4 +70,6 @@ func _on_Hurtbox_area_entered(hitbox):
 	var damage = hitbox.damage
 	self.hp -= damage
 	health_label.set_text(str(self.hp))
-	print(hitbox.get_parent().name + "'s hitbox touched " + name + "'s hitbox and dealt " + str(damage))
+
+func _on_Player_died():
+	queue_free()
