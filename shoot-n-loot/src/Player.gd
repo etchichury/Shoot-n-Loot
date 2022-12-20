@@ -1,6 +1,7 @@
 extends KinematicBody2D
 
 signal hp_changed(hp)
+signal player_got_coin
 signal died
 
 onready var animatedSprite = $AnimatedSprite
@@ -67,9 +68,13 @@ func _physics_process(_delta):
 
 
 func _on_Hurtbox_area_entered(hitbox):
-	var damage = hitbox.damage
-	self.hp -= damage
-	health_label.set_text(str(self.hp))
+	if "damage" in hitbox:
+		var damage = hitbox.damage
+		self.hp -= damage
+		health_label.set_text(str(self.hp))
 
 func _on_Player_died():
 	queue_free()
+	
+func _on_Player_got_coin():
+	emit_signal("player_got_coin")
